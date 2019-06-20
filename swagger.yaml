@@ -1,0 +1,222 @@
+swagger: "2.0"
+info:
+  description: "This is a test task server documentation."
+  version: "1.0.0"
+  title: "Test task"
+  contact:
+    email: "gurievcreative@gmail.com"
+host: "localhost:8080"
+basePath: "/"
+tags:
+- name: "provider"
+- name: "client"
+paths:
+  /providers:
+    post:
+      tags:
+      - "provider"
+      summary: "Add a new provider to the db"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Provider object that needs to be added to the db"
+        required: true
+        schema:
+          $ref: "#/definitions/ProviderWithoutID"
+      responses:
+        500:
+          description: "Internal Server Error - error object"
+        200:
+          description: "OK - created provider object"
+          schema:
+            $ref: "#/definitions/Provider"
+    get:
+      tags:
+      - "provider"
+      summary: "Get all providers"
+      description: ""
+      consumes:
+      - "application/json"
+      responses:
+        200:
+          description: "OK - all providers"
+          schema:
+            $ref: "#/definitions/Providers"
+  /provider/{providerID}:
+    put:
+      tags:
+      - "provider"
+      summary: "Update one provider"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "providerID"
+        in: "path"
+        description: "ID of provider to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Provider object that needs to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/ProviderWithoutID"
+      responses:
+        200:
+          description: "OK - updated provider object"
+          schema:
+            $ref: "#/definitions/Provider"
+        500:
+          description: "Internal Server Error"
+    delete:
+      tags:
+      - "provider"
+      summary: "Delete one provider"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "providerID"
+        in: "path"
+        description: "ID of provider to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful"
+        500:
+          description: "Internal Server Error"
+  /clients:
+    post:
+      tags:
+      - "client"
+      summary: "Add a new client to the db"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Client object that needs to be added to the db"
+        required: true
+        schema:
+          $ref: "#/definitions/ClientWithoutID"
+      responses:
+        500:
+          description: "Internal Server Error - error object"
+        200:
+          description: "OK - created client object"
+          schema:
+            $ref: "#/definitions/Client"
+    get:
+      tags:
+      - "client"
+      summary: "Get all clients"
+      description: ""
+      consumes:
+      - "application/json"
+      responses:
+        200:
+          description: "OK - all clients"
+          schema:
+            $ref: "#/definitions/Clients"
+  /client/{clientID}:
+    put:
+      tags:
+      - "client"
+      summary: "Update one client"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clientID"
+        in: "path"
+        description: "ID of client to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Client object that needs to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/ClientWithoutID"
+      responses:
+        200:
+          description: "OK - updated client object"
+          schema:
+            $ref: "#/definitions/Client"
+        500:
+          description: "Internal Server Error"
+    delete:
+      tags:
+      - "client"
+      summary: "Delete one client"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clientID"
+        in: "path"
+        description: "ID of client to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful"
+        500:
+          description: "Internal Server Error"
+definitions:
+  Provider:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+      name:
+        type: "string"
+  Providers:
+    type: "array"
+    items:
+      $ref: "#/definitions/Provider"
+  ProviderWithoutID:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+  Client:
+    type: "object"
+    properties:
+      _id: 
+        type: "string"
+      name:
+        type: "string"
+      email:
+        type: "string"
+      phone:
+        type: "string"
+      providers:
+        type: "array"
+        items:
+          type: "string"
+  Clients:
+    type: "array"
+    items:
+      $ref: "#/definitions/Client"
+  ClientWithoutID:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      email:
+        type: "string"
+      phone:
+        type: "string"
+      providers:
+        type: "array"
+        items:
+          type: "string"
