@@ -7,9 +7,13 @@ export default function(clients, providers) {
       el.providers = el.providers.map(
         p => {
           let provider = providers.find(p2 => p2._id === p);
-          return get(provider, 'name', p);
+          if (provider) {
+            return provider.name;
+          }
+          return undefined;
         }
-      ).join(', ');
+      );
+      el.providers = el.providers.filter(el => el).join(', ');
       return el;
     }
   );
